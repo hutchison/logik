@@ -17,6 +17,7 @@
 
 \usepackage[]{hyperref}
 \usepackage[]{enumerate}
+\usepackage[]{color}
 
 % Schönere Tabellen
 % dazu gibt's neue Kommandos:
@@ -46,21 +47,21 @@
 
 % Coole Zeichnungen:
 \usepackage{tikz}
-%\usetikzlibrary{
+\usetikzlibrary{%
   %backgrounds,
   %mindmap,
   %shapes.geometric,
-  %shapes.symbols,
+  shapes.symbols,
   %shapes.misc,
   %shapes.multipart,
   %positioning,
   %fit,
   %calc,
-  %arrows,
+  arrows,
   %automata,
   %trees,
   %decorations.pathreplacing,
-%}
+}
 
 % Definitionen und Sätze:
 \usepackage[]{amsthm}
@@ -68,6 +69,17 @@
 \newtheorem{definition}{Definition}
 \newtheorem{satz}{Satz}
 \newtheorem{beispiel}{Beispiel}
+\newtheorem{bemerkung}{Bemerkung}
+
+\newcommand{\wert}{\text{wert}}
+\newcommand{\ausd}{\text{\textsf{ausd}}}
+\newcommand{\et}{\text{et}}
+\newcommand{\vel}{\text{vel}}
+\newcommand{\seq}{\text{seq}}
+\newcommand{\aeq}{\text{aeq}}
+\newcommand{\non}{\text{non}}
+\newcommand{\ef}{\text{\textsf{ef}}}
+\newcommand{\ag}{\text{\textsf{ag}}}
 
 \begin{document}
 
@@ -339,12 +351,12 @@ Widerspiegelung: \emph{die Menge der Wahrheitswerte} $\{W, F\}$
   \begin{center}
     \begin{tabular}{ccccccc}
       \toprule
-      $x$ & $y$ & et$(x,y)$ & vel$(x,y)$ & seq$(x,y)$ & aeq$(x,y)$ & non$(x)$\\
+      $x$ & $y$ & $\et(x,y)$ & $\vel(x,y)$ & $\seq(x,y)$ & $\aeq(x,y)$ & $\non(x)$\\
       \midrule
       $W$ & $W$ & $W$ & $W$ & $W$ & $W$ & $F$\\
-      $W$ & $F$ & $F$ & $W$ & $F$ & $F$ & $W$\\
-      $F$ & $W$ & $F$ & $W$ & $W$ & $F$ &\\
-      $F$ & $F$ & $F$ & $F$ & $W$ & $W$ &\\
+      $W$ & $F$ & $F$ & $W$ & $F$ & $F$\\
+      $F$ & $W$ & $F$ & $W$ & $W$ & $F$ & $W$\\
+      $F$ & $F$ & $F$ & $F$ & $W$ & $W$\\
       \bottomrule
     \end{tabular}
   \end{center}
@@ -353,7 +365,7 @@ Widerspiegelung: \emph{die Menge der Wahrheitswerte} $\{W, F\}$
 Welcher Ausschnitt der Realität wird widergespiegelt?
 
 Beispiel: „und“ wird durch „et“ widergespiegelt, weil für alle Aussagen $H_1,
-H_2$ gilt: $WW(H_1 \text{\ und\ } H_2) = \text{et}(WW(H_1), WW(H_2))$
+H_2$ gilt: $WW(H_1 \text{\ und\ } H_2) = \et(WW(H_1), WW(H_2))$
 
 $WW$ sei die Abbildung, die jeder Aussage ihren Wahrheitsgehalt zuordnet.
 
@@ -417,9 +429,9 @@ Wir können mit dieser Sprache Terme für Wahrheitsfunktionen erzeugen.
   \end{itemize}
 \end{definition}
 
-\begin{definition}[die Sprache „ausd“]
-  Auch die Sprache ausd (die \emph{Menge der Ausdrücke des Aussagenkalküls}) sei
-  induktiv definiert:
+\begin{definition}[die Sprache $\ausd$]
+  Auch die Sprache $\ausd$ (die \emph{Menge der Ausdrücke des Aussagenkalküls})
+  sei induktiv definiert:
   \begin{description}
     \item[Anfang] Jede Aussagenvariable sowie $\top$ und $\bot$ sind Ausdrücke
     \item[Induktion] Sind $H_1$ und $H_2$ Ausdrücke, so auch
@@ -456,26 +468,260 @@ Die Bedeutung der Unbestimmten wird mittels Belegungen erfasst.
   Bei einer gegebenen Belegung $\beta$ kann einem Ausdruck ein \emph{Wert}
   zugeordnet werden:
   \begin{align*}
-    \text{wert}: \text{ausd} \times \text{Bel} \rightarrow \{W,F\}
+    \wert: \ausd \times \text{Bel} \rightarrow \{W,F\}
   \end{align*}
   Auch die Funktion wert ist induktiv definiert:
   \begin{description}
-    \item[Anfang] wert$(\top, \beta) = W$
-      \qquad wert$(\bot, \beta) = F$
-      \qquad wert$(p_i, \beta) = \beta(p_i)$
+    \item[Anfang] $\wert(\top, \beta) = W$
+      \qquad $\wert(\bot, \beta) = F$
+      \qquad $\wert(p_i, \beta) = \beta(p_i)$
     \item[Induktion]
       \begin{align*}
-        \text{wert}( (H_1 \wedge H_2), \beta)
-          & = \text{et}(\text{wert}(H_1, \beta), \text{wert}(H_2, \beta))\\
-        \text{wert}( (H_1 \vee H_2), \beta)
-          & = \text{vel}(\text{wert}(H_1, \beta), \text{wert}(H_2, \beta))\\
-        \text{wert}( (H_1 \rightarrow H_2), \beta)
-          & = \text{seq}(\text{wert}(H_1, \beta), \text{wert}(H_2, \beta))\\
-        \text{wert}( (H_1 \leftrightarrow H_2), \beta)
-          & = \text{aeq}(\text{wert}(H_1, \beta), \text{wert}(H_2, \beta))
+        \wert( (H_1 \wedge H_2), \beta)
+          & = \et(\wert(H_1, \beta), \wert(H_2, \beta))\\
+        \wert( (H_1 \vee H_2), \beta)
+          & = \vel(\wert(H_1, \beta), \wert(H_2, \beta))\\
+        \wert( (H_1 \rightarrow H_2), \beta)
+          & = \seq(\wert(H_1, \beta), \wert(H_2, \beta))\\
+        \wert( (H_1 \leftrightarrow H_2), \beta)
+          & = \aeq(\wert(H_1, \beta), \wert(H_2, \beta))
       \end{align*}
   \end{description}
 \end{definition}
+
+\begin{bemerkung}
+  Der Wert eines Ausdrucks hängt von der verwendeten Belegung ab. Es sind von
+  einer Belegung aber nur die Werte derjenigen Variablen relevant, die in $H$
+  auch wirklich vorkommen.
+\end{bemerkung}
+
+\begin{satz}[Gleichheit von Belegungen impliziert Gleichheit der Werte]
+  Sei $H$ ein Ausdruck. Seien $p_{j_1}, \dots, p_{j_n}$ die Variablen, die in
+  $H$ vorkommen (diese Variablenmenge kann leicht induktiv definiert werden).
+
+  Wenn $\beta_1$ und $\beta_2$ Belegungen sind, die für alle $k$ mit $1 \leq k
+  \leq n$ die Gleichung $\beta_1(p_{j_k}) = \beta_2(p_{j_k})$ erfüllen, dann ist
+  $\wert(H, \beta_1) = \wert(H, \beta_2)$.
+\end{satz}
+
+\subsection{Die Semantik eines Ausdrucks}
+\label{sub:die_semantik_eines_ausdrucks}
+
+Die Semantik eines Ausdrucks ist eine Wahrheitsfunktion:
+
+\begin{definition}[Wahrheitsfunktion eines Ausdrucks]
+  Sei $H$ ein Ausdruck und seien $p_{j_1}, \dots, p_{j_n}$ die in $H$
+  vorkommenden Aussagenvariablen (für alle $i$ gelte $j_i < j_{i+1}$).
+
+  Dann ist \emph{die zu $H$ gehörende Wahrheitsfunktion} $\Phi_H: \{W,F\} \times
+  \dots \times \{W,F\} \rightarrow \{W,F\}$ wie folgt definiert:
+
+  $\Phi_H(v_1, \dots, v_n) = \wert(H, \beta)$ für eine (ansonsten beliebige)
+  Belegung $\beta$, für die $\beta(p_{j_1}) = v_1, \dots, \beta(p_{j_n}) = v_n$
+  gilt.
+\end{definition}
+
+\begin{bemerkung}[Klammersparregeln]
+  Mit der nun definierten Semantik können wir vereinbaren, einige der Klammern
+  wegzulassen:
+  \begin{itemize}
+    \item die äußersten Klammern
+    \item Klammern in mehrfahren Konjunktionen ($\wedge$) bzw. Alternativen
+      ($\vee$)
+    \item Klammern, wenn Ausführungsreihenfolge eindeutig ist aufgrund folgender
+      Vorrangregeln:
+      \begin{itemize}
+        \item[] $\wedge$ bindet stärker als $\vee$
+        \item[] $\vee$ bindet stärker als $\rightarrow$
+        \item[] $\rightarrow$ bindet stärker als $\leftrightarrow$
+      \end{itemize}
+  \end{itemize}
+\end{bemerkung}
+
+\begin{bemerkung}[Syntax $\neq$ Semantik]
+  Die Aussage „'$\neg$' ist die non-Funktion“ ist falsch!
+
+  $\neg$ ist ein Buchstabe in einem Alphabet. Die non-Funktion ist $\{[W,F], [F,
+  W]\}$.
+
+  Die Aussage „'$\neg$' bedeutet die non-Funktion“ ist auch falsch.
+
+  Denn: Dinge bedeuten das, was \emph{wir} ihnen als Bedeutung zuordnen.
+  \emph{Ich} habe lediglich \emph{Ausdrücken} eine Bedeutung zugeordnet. (Was
+  wäre sonst die Bedeutung von ')'?)
+
+  Richtig sind z.\,B. folgende Aussagen:
+  \begin{quote}
+    non ist die (Standard-)Bedeutung von '$\neg p$'.
+  \end{quote}
+  Aber auch:
+  \begin{quote}
+    non ist die Bedeutung von '$q \rightarrow \bot$'.
+  \end{quote}
+  (Wo ist hier das '$\neg$'?)
+\end{bemerkung}
+
+\begin{bemerkung}[Bestandsaufnahme]
+  \ \\
+  \begin{center}
+  \begin{tikzpicture}[scale=1]
+    \node at (0,0) [cloud, draw, aspect=2] {„Realität“};
+    \node at (7,0) {%
+      \begin{tabular}{|c|c|}
+        \hline
+        \multicolumn{2}{|c|}{mathematisches Modell}\\
+        Semantik & Syntax\\
+        \hline
+      \end{tabular}
+    };
+    \node (aussagen) at (0, -2) {Aussagen};
+    \node (wf) at (5.5, -2) {$\{W, F\}$};
+
+    \draw [->] (aussagen) -- (wf) node [above, midway] {$WW$};
+
+    \node (avtb) at (8.5, -2) {AV, $\top$, $\bot$};
+
+    \draw [->] (wf) to [bend left] (avtb);
+    \draw [->] (avtb) edge [bend left] node [below] {Bel} (wf);
+
+    \node [text width=2cm] (aussagenfunktionen) at (0, -5)
+      {Aussagen"-funktionen};
+    \node [text width=2cm] (wahrheitsfunktionen) at (5.5, -5)
+      {Wahrheits"-funktionen};
+
+    \draw [->] (aussagenfunktionen) -- (wahrheitsfunktionen)
+      node [above, midway] {\footnotesize{nur extensionale}};
+
+    \node (ausdruecke) at (8.5, -5) {Ausdrücke};
+
+    \draw [->] (ausdruecke) edge [bend right]
+      node [above] {$\Phi_H$} (wahrheitsfunktionen);
+    \draw [->, thick] (wahrheitsfunktionen) edge [bend right]
+      node [below] {\textbf{?}} (ausdruecke);
+  \end{tikzpicture}
+  \end{center}
+\end{bemerkung}
+
+\begin{definition}[Elementarkonjunktionen]
+  Wir vereinbaren für ein Wort $w$: ${[w]}^1 = w$ und ${[w]}^0 = e$.
+
+  Ein Ausdruck der Form
+    ${[\neg]}^{i_1} p_1 \wedge \dots \wedge {[\neg]}^{i_n} p_n$
+  mit $i_1, \dots, i_n \in {0, 1}$ heißt \emph{Elementarkonjunktion}.
+
+  Wir stellen fest: für jede Elementarkonjunktion $E$ gibt es \emph{genau eine}
+  Belegung $\beta$ der ersten $n$ Aussagenvariablen, bei der $E$ wahr wird:
+  \begin{align*}
+    \beta(p_j) = \begin{cases}
+      W, &\text{\ falls\ } i_j = 0 \quad (\text{kein } \neg)\\
+      F, &\text{\ falls\ } i_j = 1 \quad (\text{ein } \neg)\\
+    \end{cases}
+  \end{align*}
+
+  Umgekehrt gilt: zu jeder Belegung $\beta$ der ersten $n$ Aussagenvariablen
+  gibt es eine Elementarkonjunktion $E_{\beta}$, die genau bei $\beta$ wahr
+  wird: $i_j = 0$, falls $\beta(p_j) = W$ und $i_j = 1$, falls $\beta(p_j) = F$.
+\end{definition}
+
+\begin{satz}[Repräsentantentheorem]
+  Zu jeder Wahrheitsfunktion gibt es einen Ausdruck, der sie repräsentiert.
+  Anders gesagt: für jede Wahrheitsfunktion $\Phi$ gibt es einen Ausdruck $H$
+  mit
+  \begin{align*}
+    \Phi_H = \Phi
+  \end{align*}
+  Sei $\Phi$ eine $n$-stellige Wahrheitsfunktion, die z.\,B. durch eine Tabelle
+  gegeben ist:
+  \begin{center}
+    \begin{tabular}{ccccc}
+      \toprule
+      $x_1$ & $x_2$ & \dots & $x_n$ & $\Phi(x_1, x_2, \dots, x_n)$\\
+      \midrule
+      $W$ & $W$ & \dots & $W$ & \dots\\
+      $W$ & $W$ & \dots & $F$ & \dots\\
+      \vdots\\
+      $F$ & $F$ & \dots & $F$ & \dots\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  Wir müssen also einen Ausdruck mit $n$ Variablen konstruieren, z.\,B. $p_1,
+  \dots, p_n$. Dies erledigen wir mit Elementarkonjunktionen.
+
+  \begin{proof}
+    Jedes Argumenttupel der gegebenen Wahrheitsfunktion $\Phi$ definiert eine
+    Belegung $\beta$ der Aussagenvariablen $p_1, \dots, p_n$.
+
+    Falls $\Phi$ an mindestens einer Stelle den Wert $W$ ergibt, setzen wir
+    \begin{align*}
+      H & = \bigvee_{\beta:\ \Phi(\beta(p_1), \dots, \beta(p_n)) = W} E_{\beta}
+    \end{align*}
+    Falls $\Phi$ an allen Stellen den Wert $F$ ergibt, setzen wir
+    \begin{align*}
+      H & = (p_1 \wedge \neg p_1) \vee \dots \vee (p_n \wedge \neg p_n)
+    \end{align*}
+    In beiden Fällen kann man leicht nachrechnen, dass $\Phi_H = \Phi$.
+  \end{proof}
+\end{satz}
+
+\begin{beispiel}[Repräsentantentheorem]
+  \ \\
+  \begin{center}
+    \begin{tabular}{cccc}
+      \toprule
+      $x_1$ & $x_2$ & $x_3$ & $\Phi(x_1, x_2, x_3)$\\
+      \midrule
+      \textcolor{blue}{$W$} & \textcolor{blue}{$W$} & \textcolor{blue}{$W$} & \textcolor{blue}{$W$}\\
+      $W$ & $W$ & $F$ & $F$\\
+      \textcolor{red}{$W$} & \textcolor{red}{$F$} & \textcolor{red}{$W$} & \textcolor{red}{$W$}\\
+      $W$ & $F$ & $F$ & $F$\\
+      $F$ & $W$ & $W$ & $F$\\
+      $F$ & $W$ & $F$ & $F$\\
+      \textcolor{yellow}{$F$} & \textcolor{yellow}{$F$} & \textcolor{yellow}{$W$} & \textcolor{yellow}{$W$}\\
+      \textcolor{green}{$F$} & \textcolor{green}{$F$} & \textcolor{green}{$F$} & \textcolor{green}{$W$}\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \begin{align*}
+    H & = \textcolor{blue}{(p_1 \wedge p_2 \wedge p_3)}
+      \vee \textcolor{red}{(p_1 \wedge \neg p_2 \wedge p_3)}
+      \vee \textcolor{yellow}{(\neg p_1 \wedge \neg p_2 \wedge p_3)}
+      \vee \textcolor{green}{(\neg p_1 \wedge \neg p_2 \wedge \neg p_3)}
+  \end{align*}
+\end{beispiel}
+
+\begin{definition}[erfüllbar]
+  $H \in \ausd$ heißt \emph{erfüllbar}, falls eine Belegung $\beta$ mit
+  $\wert(H, \beta) = W$ existiert.
+
+  Wir bezeichnen $\ef$ als die Menge der erfüllbaren Ausdrücke.
+\end{definition}
+
+\begin{definition}[allgemeingültig (Tautologie)]
+  $H \in \ausd$ heißt \emph{allgemeingültig}, falls für jede Belegung $\beta$
+  gilt: $\wert(H, \beta) = W$.
+
+  Wir bezeichnen $\ag$ als die Menge der allgemeingültigen Ausdrücke.
+\end{definition}
+
+\begin{definition}[Kontradiktion]
+  $H \in \ausd$ heißt \emph{Kontradiktion}, falls keine Belegung $\beta$ mit
+  $\wert(H, \beta) = W$ existiert.
+\end{definition}
+
+\begin{satz}[$\ag$ und $\ef$]
+  Einige Eigenschaften von $\ag$ und $\ef$:
+  \begin{itemize}
+    \item $\ag \subset \ef$
+    \item $H \in \ag$ genau dann, wenn $\neg H \notin \ef$
+    \item $H \in \ef$ genau dann, wenn $\neg H \notin \ag$
+    \item Es gibt kein $H$ mit $H \in \ag$ und $\neg H \in \ag$
+    \item Es gibt ein $H$ mit $H \notin \ag$ und $\neg H \notin \ag$
+      (z.\,B. $H = p$)
+    \item Es gibt ein $H$ mit $H \in \ef$ und $\neg H \in \ef$
+      (z.\,B. $H = p$)
+    \item Es gibt kein $H$ mit $H \notin \ef$ und $\neg H \notin \ef$
+  \end{itemize}
+\end{satz}
 
 \pagebreak
 
