@@ -80,6 +80,7 @@
 \newcommand{\non}{\text{non}}
 \newcommand{\ef}{\text{\textsf{ef}}}
 \newcommand{\ag}{\text{\textsf{ag}}}
+\newcommand{\AV}{\text{\textsf{AV}}}
 
 \begin{document}
 
@@ -409,7 +410,7 @@ Es gibt Symbole für:
 Wir können mit dieser Sprache Terme für Wahrheitsfunktionen erzeugen.
 
 \begin{definition}[Menge der Aussagenvariablen]
-  Die Sprache $AV$ (die \emph{Menge der Aussagenvariablen}) sei induktiv
+  Die Sprache $\AV$ (die \emph{Menge der Aussagenvariablen}) sei induktiv
   definiert:
   \begin{description}
     \item[Anfang] $p$ ist eine Aussagenvariable
@@ -447,7 +448,7 @@ Wir können mit dieser Sprache Terme für Wahrheitsfunktionen erzeugen.
 \end{definition}
 
 \begin{satz}[Ausdrücke sind frei erzeugt]
-  Wir betrachten dazu das Erzeugendensystem $AV \cup \{\top, \bot\}$ mit den
+  Wir betrachten dazu das Erzeugendensystem $\AV \cup \{\top, \bot\}$ mit den
   Operationen:
   \begin{align*}
     o_1(w) & = \neg \smallfrown w\\
@@ -463,7 +464,7 @@ Wir können mit dieser Sprache Terme für Wahrheitsfunktionen erzeugen.
 
 Die Bedeutung der Unbestimmten wird mittels Belegungen erfasst.
 \begin{definition}[Belegung, Wert]
-  Eine \emph{Belegung} ist eine Abbildung $\beta: AV \rightarrow \{W,F\}$.
+  Eine \emph{Belegung} ist eine Abbildung $\beta: \AV \rightarrow \{W,F\}$.
 
   Bei einer gegebenen Belegung $\beta$ kann einem Ausdruck ein \emph{Wert}
   zugeordnet werden:
@@ -579,7 +580,7 @@ Die Semantik eines Ausdrucks ist eine Wahrheitsfunktion:
 
     \draw [->] (aussagen) -- (wf) node [above, midway] {$WW$};
 
-    \node (avtb) at (8.5, -2) {AV, $\top$, $\bot$};
+    \node (avtb) at (8.5, -2) {\AV, $\top$, $\bot$};
 
     \draw [->] (wf) to [bend left] (avtb);
     \draw [->] (avtb) edge [bend left] node [below] {Bel} (wf);
