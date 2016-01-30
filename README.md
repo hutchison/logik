@@ -1,7 +1,7 @@
 # Logik & Berechenbarkeit
 
-Dieses Skript versucht die Veranstaltung „Logik & Berechenbarkeit“ von Prof.
-Dr. Wolf der Universität Rostock zusammenzufassen.
+Dieses Skript versucht die Veranstaltung „Logik & Berechenbarkeit“
+zusammenzufassen.
 
 Dabei sollen folgende Inhalte abgedeckt werden:
 
