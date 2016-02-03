@@ -65,7 +65,19 @@
 
 % Definitionen und Sätze:
 \usepackage[]{amsthm}
-\theoremstyle{definition}
+
+\newtheoremstyle{bonny}% schottisch für „ansehnlich“
+  {9pt}% measure of space to leave above the theorem. E.g.: 3pt
+  {6pt}% measure of space to leave below the theorem. E.g.: 3pt
+  {}% name of font to use in the body of the theorem
+  {}% measure of space to indent
+  {\bfseries}% name of head font
+  {\smallskip}% punctuation between head and body
+  {\newline}% space after theorem head; " " = normal interword space
+  {}% Manually specify head
+
+\theoremstyle{bonny}
+
 \newtheorem{definition}{Definition}
 \newtheorem{satz}{Satz}
 \newtheorem{beispiel}{Beispiel}
@@ -81,6 +93,9 @@
 \newcommand{\ef}{\text{\textsf{ef}}}
 \newcommand{\ag}{\text{\textsf{ag}}}
 \newcommand{\AV}{\text{\textsf{AV}}}
+\newcommand{\modell}{\text{\textsf{\ mod\ }}}
+\newcommand{\folgt}{\text{\textsf{\ fol\ }}}
+\newcommand{\fl}{\text{\textsf{fl}}}
 
 \begin{document}
 
@@ -563,7 +578,7 @@ Die Semantik eines Ausdrucks ist eine Wahrheitsfunktion:
 \end{bemerkung}
 
 \begin{bemerkung}[Bestandsaufnahme]
-  \ \\
+  \
   \begin{center}
   \begin{tikzpicture}[scale=1]
     \node at (0,0) [cloud, draw, aspect=2] {„Realität“};
@@ -665,7 +680,7 @@ Die Semantik eines Ausdrucks ist eine Wahrheitsfunktion:
 \end{satz}
 
 \begin{beispiel}[Repräsentantentheorem]
-  \ \\
+  \
   \begin{center}
     \begin{tabular}{cccc}
       \toprule
@@ -723,6 +738,175 @@ Die Semantik eines Ausdrucks ist eine Wahrheitsfunktion:
     \item Es gibt kein $H$ mit $H \notin \ef$ und $\neg H \notin \ef$
   \end{itemize}
 \end{satz}
+
+\subsection{Folgern}
+\label{sub:folgern}
+
+\begin{beispiel}
+  Aus $(p \rightarrow q)$ und $(q \rightarrow r)$ folgt $(p \rightarrow r)$.
+\end{beispiel}
+
+\begin{beispiel}
+  Aus „Wenn $X$ der Täter war, war $X$ kleiner als $1{,}75$m“ und „$X$ ist nicht
+  kleiner als $1{,}75$m“ folgt „$X$ ist nicht der Täter“.
+
+  Anders gesagt: aus $(p \rightarrow q)$ und $\neg q$ folgt $\neg p$.
+\end{beispiel}
+
+Folgern heißt:
+\begin{itemize}
+  \item gegeben ist eine Menge $X$ von Ausdrücken
+  \item aus $X$ lassen sich folgern:
+  \begin{itemize}
+    \item[] Ausdrücke, die in all denjenigen Situationen wahr sind,\\
+      wo alle alle Ausdrücke in $X$ wahr sind
+  \end{itemize}
+\end{itemize}
+
+\begin{definition}[Modell]
+  Eine Belegung $\beta$ heißt \emph{Modell} einer Ausdrucksmenge $X \ (\beta
+  \modell X)$, wenn für jedes $H \in X$ gilt:
+  \begin{align*}
+    \wert(H, \beta) = W
+  \end{align*}
+\end{definition}
+
+\begin{definition}[folgt]
+  Ein Ausdruck $H$ \emph{folgt} aus einer Ausdrucksmenge $X \ (X \folgt H)$, wenn
+  für jede Belegung $\beta$ gilt:
+  \begin{center}
+    wenn $\beta \modell X$, dann $\wert(H, \beta) = W$.
+  \end{center}
+
+  Wir bezeichnen die Menge aller Ausdrücke, die aus einer Ausdrucksmenge $X$
+  folgen, als $\fl(X) = \{H \mid X \folgt H\}$.
+\end{definition}
+
+\begin{bemerkung}[\textsf{fol} und $\fl$]
+  $\text{\textsf{fol}}$ ist eine Korrespondenz $(\text{\textsf{fol}}
+  \subseteq \mathcal{P}(\ausd) \times \ausd)$
+
+  $\fl$ ist eine Abbildung: $\fl: \mathcal{P}(\ausd) \rightarrow
+  \mathcal{P}(\ausd)$
+\end{bemerkung}
+
+\begin{beispiel}[Logikrätsel: Pferderennen]
+  Wir betrachten ein Pferderennen mit drei Pferden $A, B, C$. Folgendes ist
+  bekannt:
+  \begin{enumerate}
+    \item Wenn $C$ Dritter ist, ist $A$ nicht Erster.
+    \item $B$ liegt hinter $A$.
+  \end{enumerate}
+  Welche Angaben kann man über das Ergebnis folgern?
+
+  Wir formalisieren die Angelegenheit, indem wir für jede
+  Pferd-Platz-Kombination eine Variable einführen. Drei Pferde und drei mögliche
+  Plätze ergeben neun Variablen: $A_1, A_2, A_3, B_1, B_2, B_3, C_1, C_2, C_3$.
+
+  Unsere Ausdrucksmenge besteht einerseits aus den gegebenen Hinweisen:
+  \begin{align*}
+    X = \{ &
+      C_3 \rightarrow \neg A_1,
+      A_1 \rightarrow B_2 \vee B_3,
+      A_2 \rightarrow B_3,
+      A_3 \rightarrow \bot
+    \}
+    \intertext{vereinigt mit den grundlegenden Gesetzen von Pfererennen:}
+    \cup \ \{ &
+      A_1 \vee A_2 \vee A_3,
+      B_1 \vee B_2 \vee B_3,
+      C_1 \vee C_2 \vee C_3,
+    & \textit{jedes Pferd belegt irgendeinen Platz}\\
+    &
+      A_1 \vee B_1 \vee C_1,
+      A_2 \vee B_2 \vee C_2,
+      A_3 \vee B_3 \vee C_3,
+    & \textit{jeder Platz wird von einem Pferd belegt}\\
+    &
+      \neg(A_1 \wedge A_2),
+      \neg(A_1 \wedge A_3),
+      \neg(A_2 \wedge A_3),\\
+    &
+      \neg(B_1 \wedge B_2),
+      \neg(B_1 \wedge B_3),
+      \neg(B_2 \wedge B_3),\\
+    &
+      \neg(C_1 \wedge C_2),
+      \neg(C_1 \wedge C_3),
+      \neg(C_2 \wedge C_3),
+    & \textit{ein Pferd kann nicht zwei Plätze belegen}\\
+    &
+      \neg(A_1 \wedge B_1),
+      \neg(A_1 \wedge C_1),
+      \neg(B_1 \wedge C_1),\\
+    &
+      \neg(A_2 \wedge B_2),
+      \neg(A_2 \wedge C_2),
+      \neg(B_2 \wedge C_2),
+    & \textit{ein Platz kann nicht von}\\
+    &
+      \neg(A_3 \wedge B_3),
+      \neg(A_3 \wedge C_3),
+      \neg(B_3 \wedge C_3) \}
+    & \textit{zwei Pferden belegt werden}
+  \end{align*}
+  Nur die folgenden $6$ von $512$ Belegungen erfüllen die impliziten Aussagen:
+  \begin{align*}
+    \begin{array}{*{14}{c}}
+      \toprule
+      A_1 & A_2 & A_3 &
+      B_1 & B_2 & B_3 &
+      C_1 & C_2 & C_3 & &
+      C_3 \rightarrow \neg A_1 &
+      A_1 \rightarrow B_2 \vee B_3 &
+      A_2 \rightarrow B_3 &
+      A_3 \rightarrow \bot\\
+      \midrule
+      W & F & F &
+      F & W & F &
+      F & F & W &
+      (ABC) &
+      F & W & W & W\\
+      \textcolor{blue}{W} & \textcolor{blue}{F} & \textcolor{blue}{F} &
+      \textcolor{blue}{F} & \textcolor{blue}{F} & \textcolor{blue}{W} &
+      \textcolor{blue}{F} & \textcolor{blue}{W} & \textcolor{blue}{F} &
+      \textcolor{blue}{(ACB)} &
+      \textcolor{blue}{W} &
+      \textcolor{blue}{W} &
+      \textcolor{blue}{W} &
+      \textcolor{blue}{W}\\
+      F & W & F &
+      W & F & F &
+      F & F & W &
+      (BAC) &
+      W & W & F & W\\
+      \textcolor{blue}{F} & \textcolor{blue}{W} & \textcolor{blue}{F} &
+      \textcolor{blue}{F} & \textcolor{blue}{F} & \textcolor{blue}{W} &
+      \textcolor{blue}{W} & \textcolor{blue}{F} & \textcolor{blue}{F} &
+      \textcolor{blue}{(CAB)} &
+      \textcolor{blue}{W} &
+      \textcolor{blue}{W} &
+      \textcolor{blue}{W} &
+      \textcolor{blue}{W}\\
+      F & F & W &
+      W & F & F &
+      F & W & F &
+      (BCA) &
+      W & W & W & F\\
+      F & F & W &
+      F & W & F &
+      W & F & F &
+      (CBA) &
+      W & W & W & F\\
+    \end{array}
+  \end{align*}
+  Also: $X$ hat zwei Modelle. In beiden Modellen sind auch erfüllt: $\neg B_1,
+  \neg B_2, B_3, \neg A_3, \neg C_3$. Diese Ausdrücke folgen aus $X$. Weiterhin
+  folgen die Ausdrücke $(A_1 \vee A_2), (C_1 \vee C_2)$.
+
+  Es folgen z.\,B. \emph{nicht:} $A_1, A_2, C_1, C_2,
+    \neg A_1, \neg A_2, \neg C_1, \neg C_2$.
+\end{beispiel}
 
 \pagebreak
 
