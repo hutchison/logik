@@ -96,6 +96,13 @@
 \newcommand{\modell}{\text{\textsf{\ mod\ }}}
 \newcommand{\folgt}{\text{\textsf{\ fol\ }}}
 \newcommand{\fl}{\text{\textsf{fl}}}
+\newcommand{\Konv}{\text{\textsf{Konv}}}
+\newcommand{\abla}{\text{\textsf{\ abla\ }}}
+\newcommand{\able}{\text{\textsf{\ able\ }}}
+\newcommand{\abl}{\text{\textsf{\ abl\ }}}
+\newcommand{\aba}{\text{\textsf{aba}}}
+\newcommand{\abe}{\text{\textsf{abe}}}
+\newcommand{\ab}{\text{\textsf{ab}}}
 
 \begin{document}
 
@@ -563,12 +570,12 @@ Die Semantik eines Ausdrucks ist eine Wahrheitsfunktion:
   Die Aussage „'$\neg$' bedeutet die non-Funktion“ ist auch falsch.
 
   Denn: Dinge bedeuten das, was \emph{wir} ihnen als Bedeutung zuordnen.
-  \emph{Ich} habe lediglich \emph{Ausdrücken} eine Bedeutung zugeordnet. (Was
-  wäre sonst die Bedeutung von ')'?)
+  \emph{Ich} habe lediglich \emph{Ausdrücken} eine Bedeutung zugeordnet.
+  (Was wäre sonst die Bedeutung von '$*$'?)
 
   Richtig sind z.\,B. folgende Aussagen:
   \begin{quote}
-    non ist die (Standard-)Bedeutung von '$\neg p$'.
+    non ist die (Standard-)\,Bedeutung von '$\neg p$'.
   \end{quote}
   Aber auch:
   \begin{quote}
@@ -907,6 +914,343 @@ Folgern heißt:
   Es folgen z.\,B. \emph{nicht:} $A_1, A_2, C_1, C_2,
     \neg A_1, \neg A_2, \neg C_1, \neg C_2$.
 \end{beispiel}
+
+\begin{satz}[Eigenschaften der Abbildung $\fl$]
+  Für $\fl$ gelten folgende Eigenschaften:
+  \begin{enumerate}
+    \item $\fl(\emptyset) = \ag$
+      \hfill Jede Belegung ist Modell von $\emptyset$.
+    \item $\fl(\ag) = \ag$
+      \hfill (selber Grund)
+    \item $\fl(\{p \wedge \neg p\}) = \ausd$
+      \hfill Keine Belegung ist Modell von $\{p \wedge \neg p\}$.
+
+    \begin{proof}
+      Wenn man eine halbe Stunde nachdenkt, dann kommt man von selbst auf den
+      Beweis. Wir haben aber keine Lust immer wieder nachzudenken, weil wir den
+      Beweis wieder vergessen haben.
+
+      Zunächst dröseln wir die Definitionen auf:
+      \begin{align*}
+        \fl(X)
+          & = \{ H \mid X \folgt H \}\\
+        X \folgt H
+          & \Leftrightarrow \beta \modell X \Rightarrow \wert(H, \beta) = W\\
+        \beta \modell X
+          & \Leftrightarrow \forall H \in X: \wert(H, \beta) = W
+      \end{align*}
+      \begin{enumerate}[1.]
+        \item Wir untersuchen $\fl(\emptyset)$: $\fl(\emptyset)$ ist die Menge
+          aller Ausdrücke, die wir aus $\emptyset$ folgern können, also
+          $\{ H \mid \emptyset \folgt H \}$.
+
+          Wann lässt sich denn ein Ausdruck aus der leeren Menge folgern
+          $(\emptyset \folgt H)$?\\
+          Ein Ausdruck $H$ lässt sich genau dann aus $\emptyset$ folgern, wenn
+          gilt: wenn $\beta$ ein Modell von $\emptyset$ ist, dann ist der Wert
+          von $H$ unter dieser Belegung $\beta$ gleich $W$ $(\beta \modell
+          \emptyset \Rightarrow \wert(H, \beta) = W)$.
+
+          Wann ist eine Belegung $\beta$ ein Modell der leeren Menge $(\beta
+          \modell \emptyset)$?\\
+          Wenn $\beta$ für alle Elemente von $\emptyset$ den Wert $W$ liefert
+          $(\forall H \in \emptyset: \wert(H, \beta) = W)$.
+
+          Mit der leeren Menge verhält es sich aber so: alle All-Aussagen über
+          die Elemente der leeren Menge sind wahr, denn es gibt kein Element,
+          für das die fragliche Eigenschaft nachgeprüft werden müsste.
+
+          Das heißt, dass alle Belegungen Modelle der leeren Menge sind.
+
+          Schauen wir die Aussage $\beta \modell \emptyset \Rightarrow \wert(H,
+          \beta) = W$ an. Da alle Belegungen Modelle der leeren Menge sind, ist
+          die Aussage $\beta \modell \emptyset$ immer wahr. Das heißt, dass die
+          Implikation dann wahr ist, wenn $\wert(H, \beta) = W$ wahr ist.
+
+          Für welche Ausdrücke $H$ ist die Aussage $\wert(H, \beta) = W$ wahr?
+          Für alle allgemeingültigen Ausdrücke (Tautologie).
+
+          Und das heißt nichts anderes als $\fl(\emptyset) = \ag$.
+
+        \item Nimm die gleiche Argumentation wie eben, nur dass alle Belegungen
+          von $\ag$ auch Modelle von $\ag$ sind (schließlich ist das die
+          Definition von $\ag$). Also: $\fl(\ag) = \ag$.
+
+        \item Die Menge $\{ p \wedge \neg p \}$ enthält nur einen Ausdruck und
+          dieser ist eine Kontradiktion. Das heißt, dass jede Belegung
+          \emph{kein} Modell dieses Ausdrucks ist.
+
+          Schauen wir uns wieder die Aussage $\beta \modell \{ p \wedge \neg p
+          \} \Rightarrow \wert(H, \beta) = W$ an. Da jede Belegung kein Modell
+          der Kontradiktion ist, kann $\wert(H, \beta) = W$ wahr oder falsch
+          sein, damit die Implikation wahr wird.
+
+          Für welche Ausdrücke $H$ ist $\wert(H, \beta) = W$ wahr oder falsch?
+          Für alle Ausdrücke! Und das heißt nichts anderes als $\fl(\{ p \wedge
+          \neg p \}) = \ausd$.
+      \end{enumerate}
+    \end{proof}
+
+    \item\label{Huelleneigenschaften} Für alle Ausdrucksmengen $X$ und $Y$ gilt:
+      \begin{enumerate}
+        \item\label{Einbettung} $X \subseteq \fl(X)$
+          \hfill \emph{Einbettung}
+        \item Wenn $X \subseteq Y$, dann $\fl(X) \subseteq \fl(Y)$
+          \hfill \emph{Monotonie}
+        \item\label{Abgeschlossenheit} $\fl(\fl(X)) = \fl(X)$
+          \hfill \emph{Abgeschlossenheit}
+      \end{enumerate}
+      Die Eigenschaften~\ref{Einbettung} bis~\ref{Abgeschlossenheit} heißen
+      \emph{Hülleneigenschaften}.
+  \end{enumerate}
+  \begin{proof}[Beweis der Monotonie]
+    \begin{description}
+      \item[Voraussetzung:] $X \subseteq Y$
+      \item[Behauptung:] $\fl(X) \subseteq \fl(Y)$
+    \end{description}
+    Sei $H \in \fl(X)$. Wir müssen zeigen: $H \in \fl(Y)$.
+
+    Sei $\beta$ ein Modell von $Y$. Wir müssen nur noch zeigen: $\beta$ erfüllt
+    $H$.
+
+    Weil $\beta$ ein Modell von $Y$ ist, erfüllt $\beta$ jeden Ausdruck in $Y$.
+    Wegen $X \subseteq Y$ erfüllt $\beta$ also auch jeden Ausdruck in $X$. Da $H
+    \in \fl(X)$ ist, gilt schließlich $\beta$ erüllt $H$.
+  \end{proof}
+  \begin{proof}[Beweis der Abgeschlossenheit] Um die Gleichheit beider Mengen zu
+    zeigen, zeigen wir einerseits $\fl(\fl(X)) \subseteq \fl(X)$ und
+    andererseits $\fl(X) \subseteq \fl(\fl(X))$.
+    \begin{enumerate}
+      \item Zu zeigen: $\fl(X) \subseteq \fl(\fl(X))$
+
+        Folgt aus Satz der Einbettung.
+
+      \item Zu zeigen: $\fl(\fl(X)) \subseteq \fl(X)$
+
+        Sei $H \in \fl(\fl(X))$, also jedes Modell von $\fl(X)$ erfüllt $H$. Wir
+        müssen zeigen: $H \in \fl(X)$.
+
+        Sei $\beta$ Modell von $X$, dann müssen wir nur noch zeigen: $\beta$
+        erfüllt $H$.
+
+        Weil $\beta$ ein Modell von $X$ ist, erfüllt es auch jeden Ausdruck, der
+        aus $X$ folgt. $\beta$ ist demnach ein Modell von $\fl(X)$ und erfüllt
+        nach Voraussetzung $H$.
+    \end{enumerate}
+  \end{proof}
+\end{satz}
+
+\begin{definition}[Hüllenoperation]
+  Sei $M$ eine Menge und $F: \mathcal{P}(M) \rightarrow \mathcal{P}(M)$ eine
+  Abbildung, die die drei Hülleneigenschaften erfüllt. Dann heißt $F$
+  \emph{Hüllenoperation}.
+\end{definition}
+
+\begin{beispiel}[Hüllenoperationen]
+  \begin{enumerate}
+    \item $\fl$
+    \item reflexiv-transitive Hülle einer Relation:
+      \begin{itemize}
+        \item $R \subseteq R^*$
+        \item Wenn $R_1 \subseteq R_2$, dann $R_1^* \subseteq R_2^*$.
+        \item ${(R^*)}^* = R^*$
+      \end{itemize}
+  \end{enumerate}
+\end{beispiel}
+
+\begin{satz}[Endlichkeitssatz (für das Folgern)]
+  Für jede Ausdrucksmenge $X$ und jeden Ausdruck $H$ gilt: wenn $H \in \fl(X)$,
+  dann gibt es eine Ausdrucksmenge $X^*$ mit:
+  \begin{enumerate}
+    \item $X^* \subseteq X$
+    \item $X^*$ ist endlich
+    \item $H \in \fl(X^*)$
+  \end{enumerate}
+
+  Diese Eigenschaft gilt auch für die reflexiv-transitive Hülle: für jede Menge
+  $M$, jede Relation $R$ in $M$ und jedes $[a,b] \in M \times M$ gilt: wenn
+  $[a,b] \in R^*$, dann gibt es ein $R'$ mit:
+  \begin{enumerate}
+    \item $R' \subseteq R$
+    \item $R'$ ist endlich
+    \item $[a,b] \in R'^*$
+  \end{enumerate}
+\end{satz}
+
+\begin{beispiel}[Folgern]
+  Angenommen unsere Ausdrucksmenge wäre die unendliche Menge
+  \begin{align*}
+    X = \{ p_0 \} \cup \{ p_i \rightarrow p_{i+1} \mid i \in \mathbb{N} \}
+  \end{align*}
+  Das einzige Modell ist die Belegung $\beta$ mit $\beta(p_i) = W$ für alle $i
+  \in \mathbb{N}$.
+
+  Offensichtlich können wir den Ausdruck $p_5$ aus $X$ folgern. Nach dem
+  Endlichkeitssatz können wir dazu auch eine endliche Teilmenge $X^* \subset X$
+  angeben, aus der wir $p_5$ folgern können.
+
+  Diese lautet $X^* = \{
+    p_0,
+    p_0 \rightarrow p_1,
+    p_1 \rightarrow p_2,
+    p_2 \rightarrow p_3,
+    p_3 \rightarrow p_4,
+    p_4 \rightarrow p_5
+  \}$. Also gilt $X^* \folgt p_5$.
+\end{beispiel}
+
+\begin{bemerkung}[Bedeutung des Endlichkeitssatzes]
+  Für jedes $H \in \fl(X)$ ist der Grund, warum $H \in \fl(X)$ ist, endlich
+  aufschreibbar (auch wenn $X$ unendlich ist): gib ein (geeignetes) endliches
+  $X^* \subseteq X$ an – die Prüfung $H \in \fl(X^*)$ ist durch
+  Wahrheitswerttabelle zu bewerkstelligen.
+
+  Aus dem (geprüften) $H \in \fl(X^*)$ ergibt sich $H \in \fl(X)$ per Satz der
+  Monotonie.
+
+  Der Endlichkeitssatz ist eine für logische Operatoren äußerst erwünschte
+  Eigenschaft.
+\end{bemerkung}
+
+\begin{beispiel}[Gegenbeispiel für einen Hüllenoperator, der nicht den
+  Endlichkeitssatz erfüllt]
+  Man könnte vermuten, dass jeder Hüllenoperator den Endlichkeitssatz erfüllt.
+  Aber dem ist nicht so, wie das folgende Gegenbeispiel zeigt.
+
+  Wir betrachten Mengen von reellen Zahlen. Dabei sei $\Konv(M)$ wie folgt
+  definiert:
+  \begin{align*}
+    \Konv(M) & := \{
+      x \mid x \text{\ ist Grenzwert einer konvergenten Zahlenfolge aus Elementen
+      von } M
+    \}
+  \end{align*}
+  Dass $\Konv$ ein Hüllenoperator ist, kann man selbst überprüfen:
+  \begin{itemize}
+    \item $M \subseteq \Konv(M)$, z.\,B. konstante Folgen
+    \item Wenn $M \subseteq N$, dann $\Konv(M) \subseteq \Konv(N)$.
+    \item $\Konv(\Konv(M)) = \Konv(M)$
+  \end{itemize}
+  Für alle endlichen Mengen $M$ ist $\Konv(M) = M$.
+
+  Wenn wir aber $\Konv(\{ x \mid x > 0 \})$ und die Folge $1, \frac{1}{2},
+  \frac{1}{4}, \frac{1}{8}, \dots$ betrachten, bemerken wir, dass diese Folge
+  den Grenzwert $0$ besitzt und damit $\Konv(\{ x \mid x > 0 \}) = \{ x \mid x
+  \geq 0 \}$ gilt.
+\end{beispiel}
+
+\begin{satz}[Ableitbarkeitstheorem]
+  Für jede Ausdrucksmenge $X$ und alle Ausdrücke $H$ und $H'$ gilt: wenn $(H
+  \rightarrow H') \in \fl(X)$, dann $H' \in \fl(X \cup \{ H \})$.
+
+  \begin{proof}
+    Sei $\beta$ ein Modell von $X \cup \{ H \}$.
+    Zu zeigen: $\wert(H', \beta) = W$.
+
+    Wenn $\beta$ ein Modell von $X \cup \{ H \}$ ist, dann erfüllt $\beta$
+    alle Ausdrücke in $X$ sowie $H$. Als Modell von $X$ erfüllt $\beta$ nach
+    Voraussetzung auch $(H \rightarrow H')$.
+
+    Aus $\wert(H, \beta) = W$ und $\wert((H \rightarrow H'), \beta) = W =
+    \seq(\wert(H, \beta), \wert(H', \beta))$ folgt $\wert(H', \beta) = W$.
+  \end{proof}
+\end{satz}
+
+\begin{satz}[Deduktionstheorem (Umkehrung des Ableitbarkeitstheorems)]
+  Für jede Ausdrucksmenge $X$ und alle Ausdrücke $H$ und $H'$ gilt:
+  wenn $H' \in \fl(X \cup \{ H \})$, dann $(H \rightarrow H') \in \fl(X)$.
+
+  \begin{proof}
+    Sei $\beta$ ein Modell von $X$.
+    Zu zeigen: $\wert((H \rightarrow H'), \beta) = W$.
+
+    \begin{itemize}
+      \item[1. Fall:] $\wert(H, \beta) = W$.\\
+        Dann ist $\beta$ ein Modell von $X \cup \{ H \}$, also $\wert(H, \beta)
+        = W$ und $\wert(H', \beta) = W$.
+        Damit ist offenbar auch $\wert((H \rightarrow H'), \beta) = W$
+      \item[2. Fall:] $\wert(H, \beta) = F$.\\
+        Dann ist sowieso $\wert((H \rightarrow H'), \beta) = W$.
+    \end{itemize}
+  \end{proof}
+\end{satz}
+
+\subsection{Ableiten}
+\label{sub:ableiten}
+
+Ziel: Widerspiegelung des Folgerns durch rein syntaktische Manipulation
+
+\begin{definition}[Abtrennungsregel (modus ponens)]
+  \begin{tabular}{l}
+    $H$\\
+    $H \rightarrow H'$\\
+    \midrule
+    \multicolumn{1}{r}{$H'$}
+  \end{tabular}
+\end{definition}
+
+\begin{definition}[Einsetzungsregel]
+  \begin{tabular}{l}
+    $H$\\
+    \midrule
+    $H[p_i \leftarrow H^*]$
+  \end{tabular}
+  \begin{description}
+    \item[Induktionsanfang:]
+      \begin{align*}
+        p_j[p_i \leftarrow H^*] & =
+        \begin{cases}
+          H^* &\text{\ falls\ } i = j\\
+          p_j &\text{\ sonst}
+        \end{cases}\\
+        \top[p_i \leftarrow H^*] & = \top\\
+        \bot[p_i \leftarrow H^*] & = \bot
+      \end{align*}
+    \item[Induktionsschritt:]
+      \begin{align*}
+        \neg H[p_i \leftarrow H^*] & = \neg H[p_i \leftarrow H^*]\\
+        (H_1 \circ H_2)[p_i \leftarrow H^*] & = (H_1[p_i \leftarrow H^*] \circ
+        H_2[p_i \leftarrow H^*])
+      \end{align*}
+  \end{description}
+\end{definition}
+
+\begin{definition}[Ableiten]
+  Mit den eben definierten Regeln können wir zu einer Menge von Ausdrücken $X$
+  neue Mengen von Ausdrücken definieren, die sich aus $X$ auf verschiedene Arten
+  ableiten lassen:
+  \begin{enumerate}
+    \item Mit der Abtrennungsregel:
+      \begin{description}
+        \item[Induktionsanfang:] Wenn $H \in X$, dann $X \abla H$.
+        \item[Induktionsschritt:] Wenn $X \abla (H \rightarrow H')$ und $X \abla
+          H$, dann $X \abla H'$.
+      \end{description}
+      Wir bezeichnen die Menge der Ausdrücke, die sich aus $X$ mittels
+      Abtrennungsregel ableiten lassen, als $\aba(X) = \{ H \mid X \abla H \}$.
+
+    \item Mit der Einsetzungsregel:
+      \begin{description}
+        \item[Induktionsanfang:] Wenn $H \in X$, dann $X \able H$.
+        \item[Induktionsschritt:] Wenn $X \able H$ und $H^* \in \ausd$, dann $X
+          \able H[p_i \leftarrow H^*]$.
+      \end{description}
+      Wir bezeichnen die Menge der Ausdrücke, die sich aus $X$ mittels
+      Einsetzungsregel ableiten lassen, als $\abe(X) = \{ H \mid X \able H \}$.
+
+    \item Mit beiden Regeln:
+      \begin{description}
+        \item[Induktionsanfang:] Wenn $H \in X$, dann $X \abl H$.
+        \item[Induktionsschritt:] Wenn $X \abl (H \rightarrow H')$ und $X \abl
+          H$, dann $X \abl H'$\\
+          Wenn $X \abl H$ und $H^* \in \ausd$, dann $X \abl [p_i \leftarrow
+          H^*]$.
+      \end{description}
+      Wir bezeichnen die Menge der Ausdrücke, die sich aus $X$ mittels
+      Abtrennungs- und Einsetzungsregel ableiten lassen, als $\ab(X) = \{ H \mid
+      X \abl H \}$.
+  \end{enumerate}
+\end{definition}
 
 \pagebreak
 
