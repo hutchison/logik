@@ -3,6 +3,8 @@
 ]{scrartcl}
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage[]{concrete}
 
 \usepackage[]{parskip}
 \usepackage[]{microtype}
@@ -1139,7 +1141,7 @@ Folgern heißt:
   \geq 0 \}$ gilt.
 \end{beispiel}
 
-\begin{satz}[Ableitbarkeitstheorem]
+\begin{satz}[Ableitbarkeitstheorem]\label{satz:Ableitbarkeitstheorem}
   Für jede Ausdrucksmenge $X$ und alle Ausdrücke $H$ und $H'$ gilt: wenn $(H
   \rightarrow H') \in \fl(X)$, dann $H' \in \fl(X \cup \{ H \})$.
 
@@ -1251,6 +1253,117 @@ Ziel: Widerspiegelung des Folgerns durch rein syntaktische Manipulation
       X \abl H \}$.
   \end{enumerate}
 \end{definition}
+
+\begin{satz}[Eigenschaften von $\aba, \abe, \ab$]
+  Für $\aba, \abe$ und $\ab$ gelten folgende Eigenschaften:
+  \begin{enumerate}
+    \item \begin{align*}
+        \aba(\emptyset) & = \emptyset\\
+        \abe(\emptyset) & = \emptyset\\
+        \ab(\emptyset) & = \emptyset
+    \end{align*}
+
+    \item \begin{align*}
+        \aba(\ag) & = \ag\\
+        \abe(\ag) & = \ag\\
+        \ab(\ag) & = \ag
+    \end{align*}
+    \item \begin{align*}
+        X & \subseteq \aba(X)\\
+        X & \subseteq \abe(X)\\
+        X & \subseteq \ab(X)
+    \end{align*}
+    \begin{center}
+      Wenn $X \subseteq Y$, dann $\aba(X) \subseteq \aba(Y)$.\\
+      Wenn $X \subseteq Y$, dann $\abe(X) \subseteq \abe(Y)$.\\
+      Wenn $X \subseteq Y$, dann $\ab(X) \subseteq \ab(Y)$.
+    \end{center}
+    \begin{align*}
+      \aba(\aba(X)) & = \aba(X)\\
+      \abe(\abe(X)) & = \abe(X)\\
+      \ab(\ab(X)) & = \ab(X)
+    \end{align*}
+    Daraus folgt: alle Operatoren sind Hüllenoperatoren.
+
+    \item Für alle Ausdrucksmengen $X$ und Ausdrücke $H$ gilt:
+
+      Wenn $X \abla H$, dann existiert eine endliche Teilmenge $X^* \subseteq X$
+      mit $X^* \abla H$.\\
+      Wenn $X \able H$, dann existiert eine endliche Teilmenge $X^* \subseteq X$
+      mit $X^* \able H$.\\
+      Wenn $X \abl H$, dann existiert eine endliche Teilmenge $X^* \subseteq X$
+      mit $X^* \abl H$.\\
+
+      \begin{proof}[Beweis für $\ab$]
+        \begin{description}
+          \item[Induktionsanfang:] Sei $H \in X$. Dann setzen wir
+            $X^* = \{ H \}$.
+          \item[Induktionsschritt 1:] Sei $X_1^*$ eine endliche Teilmenge von
+            $X$ mit $X_1^* \abl H$ und sei $X_2^*$ eine endliche Teilmenge von
+            $X$ mit $X_2^* \abl (H \rightarrow H')$. Wir setzen $X^* = X_1^*
+            \cup X_2^*$. Dann gilt offenbar $X^* \abl H'$.
+          \item[Induktionsschritt 2:] Sei $X_1^*$ eine endliche Teilmenge von
+            $X$ mit $X_1^* \abl H$. Wir setzen $X^* = X_1^*$. Dann gilt offenbar
+            $X^* \abl H[p_i \leftarrow H^*]$.
+        \end{description}
+      \end{proof}
+
+    \item Wenn $X \abla (H \rightarrow H')$, dann $X \cup \{ H \} \abla H'$.\\
+      Wenn $X \abl (H \rightarrow H')$, dann $X \cup \{ H \} \abl H'$.\\
+      ($\ab$ und $\aba$ erfüllen das Ableitbarkeitstheorem
+      [\autoref{satz:Ableitbarkeitstheorem}])
+
+      Dies gilt jedoch nicht für \textsf{able}: $X = \{ p \wedge q \rightarrow p
+      \}, H = p \wedge q, H' = p$
+
+    \item Keiner der Operatoren erfüllt das Deduktionstheorem. Gegenbeispiel für
+      alle drei: $X = \emptyset, H = H' = p$.
+  \end{enumerate}
+\end{satz}
+
+\subsubsection{Syntaktische Charakterisierung von $\fl$}
+Können wir $\fl(X)$ durch eine rein syntaktische Charakterisierung angeben?
+Eventuell ist $\fl(X) = \ab(X)$? Oder $\aba(X)$? Oder $\abe(X)$? Leider nicht,
+denn für $X = \emptyset$ bekommen wir nicht $\fl(X) = \ag$.
+
+Vielleicht ist $\fl(X) = \ab(X \cup \ag)$?. Auch nicht, denn für $X = \{ p \}$
+wäre $\fl(X) = \ausd$. Dies liegt an der Einsetzungsregel.
+
+Was wäre, wenn wir nur die Ableitungsregel betrachten würden:
+\begin{align*}
+  \fl(X) & = \aba(X \cup \ag)
+\end{align*}
+Das funktioniert.
+
+\begin{proof}
+  \begin{description}
+    \item[Teil 1:] Sei $H \in \fl(X)$. Behauptung: $H \in \aba(X \cup \ag)$.
+
+      Nach dem Endlichkeitssatz für $\fl$ existiert eine endliche Menge $X^* =
+      \{ H_1, \ldots, H_n \}$ mit $X^* \subseteq X$ und $H \in \fl(X^*)$.
+      \begin{description}
+        \item[Fall 1: $n = 0$] (also $X^* = \emptyset$)
+
+          Dann gilt $H \in \fl(\emptyset) = \ag = \aba(\emptyset \cup \ag)
+          \subseteq \aba(X \cup \ag)$.
+
+        \item[Fall 2: $n > 0$] Nach dem Deduktionstheorem für $\fl$ gilt:
+          \begin{align*}
+            (H_n \rightarrow H) \in \fl(\{ H_1, \ldots, H_{n-1} \})
+          \end{align*}
+          und damit
+          \begin{align*}
+            (H_{n-1} \rightarrow (H_n \rightarrow H)) \in \fl(\{ H_1, \ldots, H_{n-2} \})
+          \end{align*}
+          und so weiter, bis wir schließlich bei
+          \begin{align*}
+            (H_1 \rightarrow (H_2 \rightarrow ( \ldots \rightarrow (H_n
+            \rightarrow H)))\cdots) \in \fl(\emptyset)
+            = \ag = \aba(\emptyset \cup \ag)
+          \end{align*}
+      \end{description}
+  \end{description}
+\end{proof}
 
 \pagebreak
 
