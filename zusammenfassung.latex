@@ -1371,11 +1371,25 @@ Das funktioniert.
 \label{sec:anhang}
 
 \subsection*{mündliche Prüfung}
+Die W-Fragen und die geforderten Antworten:
 \begin{itemize}
   \item Was ist …? $\rightarrow$ Definition
   \item Was wissen wir über …? $\rightarrow$ Sätze
   \item Warum? $\rightarrow$ Beweis
   \item Wie? $\rightarrow$ Algorithmus
+\end{itemize}
+
+\subsection*{mögliche Prüfungsinhalte}
+\label{sub:moegliche_Pruefungsinhalte}
+
+\begin{itemize}
+  \item Folgern und Ableiten in der Aussagenlogik
+  \item Turingmaschinen und Beziehung zur $\mu$-Rekursion
+    \begin{itemize}
+      \item Kleene-scher Darstellungssatz
+      \item universelle Turingmaschine
+      \item Beziehung zum Halteproblem
+    \end{itemize}
 \end{itemize}
 
 \end{document}
