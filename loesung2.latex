@@ -1,0 +1,328 @@
+\documentclass[
+%% alle weiteren Papierformat einstellbar:
+a4paper, %apaper,
+%% keine Seitenzahlen:
+%empty,
+%% Schriftgröße (12pt, 11pt (Standard)):
+11pt,
+%% kleinere Überschriften:
+%smallheadings,
+]
+{scrartcl}
+
+% _das_ Mathepaket schlechthin:
+\usepackage[
+  %% Nummerierung von Gleichungen links:
+  leqno,
+  %% Ausgabe von Gleichungen linksbündig:
+  fleqn,
+]{mathtools}
+% und dazu noch ein paar Mathesymbole und so:
+% (muss vor mathspec geladen werden)
+\usepackage{amsmath, amssymb}
+
+\usepackage[]{parskip}
+
+% Um auch schöne Schriftarten auswählen zu können:
+\usepackage[MnSymbol]{mathspec}
+% Wir wollen, dass alle unsere Schriften für TeX und einander angepasst sind:
+\defaultfontfeatures{Mapping=tex-text, Scale=MatchLowercase}
+% Die Hauptschriftart:
+\setmainfont[Numbers=OldStyle]{Minion Pro}
+% Die Matheschriftart:
+\setmathsfont(Digits,Latin,Greek)[
+  Numbers={Lining, Proportional}
+]{Minion Pro}
+% Die Schriftart für serifenlose Texte (z.B. Überschriften):
+\setallsansfonts[]{Minion Pro}
+% Und die Schriftart für nichtproportionale Texte:
+\setallmonofonts[]{Fira Mono}
+
+% Deutsche Sprache bei Silbentrennung und Datum:
+\usepackage[ngerman]{babel}
+
+% St. Mary Road, liefert Symbole für theoretische Informatik (z.B. \lightning):
+\usepackage{stmaryrd}
+
+% nutze die volle Seite als Satzspiegel:
+\usepackage[
+  % Randbreite sei 1cm (sonst ist sie 1in):
+  cm,
+  % Kopf- und Fußzeile werden miteinbezogen:
+  headings
+]{fullpage}
+% verbesserte Tabellen
+% bietet u.a. die Spaltenmöglichkeit 'm{width}' = zentrierte Spalte mit fester
+% Breite
+\usepackage{array}
+% kann komplexe Linien in Tabellen ziehen:
+%\usepackage{hhline}
+% mehrseitige Tabellen:
+%\usepackage{longtable}
+% Tabellen mit gedehnten Spalten:
+%\usepackage{tabularx}
+% Pimpt enumerate auf (optionales Argument liefert Nummerierung):
+\usepackage{enumerate}
+% Kann descriptions auf die selbe Höhe bringen:
+%\usepackage{enumitem}
+% Liefert Hyperlinks (\hyperref, \url, \href}
+\usepackage{hyperref}
+% Farben (wie bei TikZ):
+%\usepackage{xcolor}
+% Ändert den Zeilenabstand:
+\usepackage[
+  % nur eine Möglichkeit auswählen:
+  singlespacing
+  %onehalfspacing
+  %doublespacing
+]{setspace}
+% Schönere Tabellen
+% dazu gibt's neue Kommandos:
+% - \toprule[(Dicke)], \midrule[(Dicke)], \bottomrule[(Dicke)]
+% - \addlinespace: Extrahöhe zwischen Zeilen
+\usepackage{booktabs}
+% Schöne numerische Zitierungen:
+%\usepackage{cite}
+% Verbessert den Satz von Abbildungsüberschriften:
+%\usepackage{caption}
+% Ermöglicht durch \begin{linenumbers} Zeilennummern anzuzeigen:
+%\usepackage{lineno}
+% Ermöglicht Zugriff auf die letzte Seite (z.B. \pageref{LastPage}):
+\usepackage{lastpage}
+% Quelltext schön setzen:
+%\usepackage{listings}
+% Logische Beweise:
+%\usepackage{bussproofs}
+% Unterstreichungen (\uline, \uuline, \sout: durchgestrichen, \uwave):
+%\usepackage{ulem}
+% Kann alle möglichen Maße ändern
+% will man Querformat, dann:
+%\usepackage[landscape]{geometry}
+% bietet gestrichelte vert. Linien in Tabellen (':')
+%\usepackage{arydshln}
+% Quelltext schön setzen:
+% (verlangt "xelatex -shell-escape"!)
+%\usepackage{minted}
+% um Bilder einzubinden:
+%\usepackage{graphicx}
+% um in Tabellen eine Zelle über mehrere Zeilen laufen zu lassen:
+%\usepackage{multirow}
+
+% Coole Zeichnungen:
+%\usepackage{tikz}
+%\usetikzlibrary{
+  %backgrounds,
+  %mindmap,
+  %shapes.geometric,
+  %shapes.symbols,
+  %shapes.misc,
+  %shapes.multipart,
+  %positioning,
+  %fit,
+  %calc,
+  %arrows,
+  %automata,
+  %trees,
+  %decorations.pathreplacing,
+%}
+
+% eigens gebaute Lochmarken:
+%\usepackage{eso-pic}
+%\AddToShipoutPicture*{
+  %\put(\LenToUnit{0mm},\LenToUnit{228.5mm})
+    %{\rule{\LenToUnit{20pt}}{\LenToUnit{0.5pt}}}
+  %\put(\LenToUnit{0mm},\LenToUnit{68.5mm})
+    %{\rule{\LenToUnit{20pt}}{\LenToUnit{0.5pt}}}
+%}
+
+% coole Kopf- und Fußzeilen:
+\usepackage{fancyhdr}
+% Seitenstil ist natürlich fancy:
+\pagestyle{fancy}
+% alle Felder löschen:
+\fancyhf{}
+% Veranstaltung:
+\fancyhead[L]{Logik und Berechenbarkeit}
+% Seriennummer:
+\fancyhead[C]{Aufgabenblatt 2}
+% Name und Matrikelnummer:
+\fancyhead[R]{Martin Darmüntzel (7251955)}
+%\fancyfoot[L]{}
+%\fancyfoot[C]{\thepage}
+\fancyfoot[C]{\thepage\,/\,\pageref{LastPage}}
+% Linie oben/unten:
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+
+\begin{document}
+
+% Punktetabelle für Korrektoren:
+\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+    \textbf{1.} & \textbf{2.} & \textbf{3.} & $\Sigma$\\
+    \midrule
+    & & & \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Betrachtet werden die folgenden Relationen über
+    $\mathbb{N} \setminus \{ 0\}$.
+    Welche sind reflexiv, irreflexiv, symmetrisch, asymmetrisch,
+    antisymmetrisch?
+
+  \begin{enumerate}[{1.}1.]
+    \item $\{ (1,1) \}$
+
+      \begin{description}
+        \item[ist] reflexiv, symmetrisch, antisymmetrisch
+        \item[ist nicht] irreflexiv, asymmetrisch
+      \end{description}
+
+    \item $\{ (a,b) : a < b \}$
+
+      \begin{description}
+        \item[ist] irreflexiv, asymmetrisch, antisymmetrisch
+        \item[ist nicht] reflexiv, symmetrisch
+      \end{description}
+
+    \item $\{ (a,b) : a = b \}$
+
+      \begin{description}
+        \item[ist] reflexiv, symmetrisch, antisymmetrisch
+        \item[ist nicht] irreflexiv, asymmetrisch
+      \end{description}
+
+    \item $\{ (a,b) : a \mid b \}$
+
+      \begin{description}
+        \item[ist] reflexiv, asymmetrisch, antisymmetrisch
+        \item[ist nicht] irreflexiv, symmetrisch
+      \end{description}
+
+    \item $\{ (a,b) : a \neq b \}$
+
+      \begin{description}
+        \item[ist] irreflexiv, symmetrisch
+        \item[ist nicht] reflexiv, asymmetrisch, antisymmetrisch
+      \end{description}
+
+    \item $\{ (a,b) : ggT(a,b) = 1 \}$
+
+      \begin{description}
+        \item[ist] symmetrisch
+        \item[ist nicht] reflexiv, irreflexiv, asymmetrisch, antisymmetrisch
+      \end{description}
+  \end{enumerate}
+
+  \item Gegeben sei $m \in \mathbb{Z} \setminus \{0\}$. Wir definieren auf
+    $\mathbb{Z}$ die Relation $R = \{ (a,b) : m \mid (a - b) \}$.
+
+    \begin{enumerate}[{2.}1.]
+      \item Zeigen Sie, dass $R$ eine Äquivalenzrelation ist.
+
+        \begin{description}
+          \item[Reflexivität] Zu zeigen:
+            $\forall a \in \mathbb{Z}: (a,a) \in R$
+
+            Es gilt
+            $(a,a) \in R \Leftrightarrow m \mid (a-a) \Leftrightarrow m \mid 0$
+            und da jede Zahl ein Teiler von $0$ ist, ist die Aussage wahr.
+
+          \item[Symmetrie] Zu zeigen:
+            $\forall a,b \in \mathbb{Z}: (a,b) \in R \Rightarrow (b,a) \in R$
+
+            Es gilt
+            $(a,b) \in R \Leftrightarrow m \mid (a - b) \Leftrightarrow m \mid -(b - a)$
+            und da $m \mid k \Rightarrow m \mid -k$ gilt, ist $(b,a) \in R$.
+
+          \item[Transitivität] Zu zeigen:
+            $\forall a,b,c \in \mathbb{Z}: (a,b) \in R \wedge (b,c) \in R
+            \Rightarrow (a,c) \in R$
+
+            Es gilt
+            \begin{align*}
+              (a,b) \in R
+              & \Leftrightarrow m \mid (a - b)
+              \Leftrightarrow \exists k \in \mathbb{Z}: k \cdot m = a - b\\
+              (b,c) \in R & \Leftrightarrow m \mid (b - c)
+              \Leftrightarrow \exists l \in \mathbb{Z}: l \cdot m = b - c
+            \end{align*}
+            Sei $n = k + l$, dann gilt:
+            \begin{align*}
+              k \cdot m + l \cdot m & = (k+l) \cdot m = n \cdot m\\
+              a - b + b - c & = a - c
+            \end{align*}
+            Damit gilt $\exists n \in \mathbb{Z}: n \cdot m = a - c$ und das
+            heißt $m \mid a - c$, also gilt $(a,c) \in R$.
+        \end{description}
+
+      \item Zeigen Sie, dass $R$ verträglich mit der Addition ist, d.\,h.:\ wenn
+        $(a, a') \in R$ und $(b, b') \in R$, dann ist auch $(a+b, a'+b') \in R$.
+
+        Es gilt:
+        \begin{align*}
+          (a,a') \in R
+          & \Leftrightarrow m \mid (a - a')
+          \Leftrightarrow \exists k \in \mathbb{Z}: k \cdot m = a - a'\\
+          (b,b') \in R
+          & \Leftrightarrow m \mid (b - b')
+          \Leftrightarrow \exists l \in \mathbb{Z}: l \cdot m = b - b'
+        \end{align*}
+        Addition beider Gleichungen bringt:
+        \begin{align*}
+          a-a' + b-b' & = (k+l)m\\
+          a+b - (a'+b') & = (k+l)m \Rightarrow m \mid a+b - (a'+b')
+        \end{align*}
+        Also gilt $(a+b, a'+b') \in R$.
+
+      \item Ist $R$ auch verträglich mit der Multiplikation (also folgt aus $(a,
+        a') \in R$ und $(b, b') \in R$, dass $(a \cdot a', b \cdot b') \in R$)?
+
+        Es gilt:
+        \begin{align*}
+          (a,a') \in R
+          & \Leftrightarrow m \mid (a - a')
+          \Leftrightarrow \exists k \in \mathbb{Z}: k \cdot m = a - a'
+          \Leftrightarrow a = k \cdot m + a'\\
+          (b,b') \in R
+          & \Leftrightarrow m \mid (b - b')
+          \Leftrightarrow \exists l \in \mathbb{Z}: l \cdot m = b - b'
+          \Leftrightarrow b = l \cdot m + b'
+        \end{align*}
+        Daraus folgt:
+        \begin{align*}
+          a \cdot b & = (k \cdot m + a')(l \cdot m + b')\\
+                    & = k \cdot l \cdot m^2 + k \cdot m \cdot b' + l \cdot m \cdot a' + a' \cdot b'\\
+                    & = m \cdot (k \cdot l \cdot m + k \cdot b' + l \cdot a') + a' \cdot b'
+        \end{align*}
+        Umstellen bringt
+        $a \cdot b  - a' \cdot b' = m \cdot (k \cdot l \cdot m + k \cdot b' + l \cdot a')$
+        und daraus folgt die Behauptung.
+    \end{enumerate}
+
+  \item Beweisen Sie mit vollständiger Induktion, dass $4^n - 1$ für jedes $n
+    \in \mathbb{N}$ durch $3$ teilbar ist.
+
+    \begin{description}
+      \item[Induktionsanfang] Sei $n = 0$, dann ist $4^n - 1 = 4^0 - 1 = 0$ und
+        da $3 \mid 0$ gilt, ist die Aussage wahr.
+
+      \item[Induktionsschritt] Zu beweisen ist folgende Behauptung:
+        $3 \mid 4^n-1 \Rightarrow 3 \mid 4^{n+1} - 1$
+
+        Es gilt:
+        \begin{align*}
+          4^{n+1} - 1
+          = 4 \cdot 4^n - 1
+          = (3+1) \cdot 4^n - 1
+          = 3 \cdot 4^n + 4^n - 1
+        \end{align*}
+        Jetzt gilt $3 \mid 3 \cdot 4^n$ (trivial) und $3 \mid 4^n - 1$
+        (Induktionsvoraussetzung). Dass die Summe dann auch durch $3$ teilbar
+        sein muss, wurde schon letzte Woche gezeigt. \hfill $\Box$
+    \end{description}
+\end{enumerate}
+\end{document}

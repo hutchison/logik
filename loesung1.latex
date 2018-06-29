@@ -1,0 +1,308 @@
+\documentclass[
+%% alle weiteren Papierformat einstellbar:
+a4paper, %apaper,
+%% keine Seitenzahlen:
+%empty,
+%% Schriftgröße (12pt, 11pt (Standard)):
+11pt,
+%% kleinere Überschriften:
+%smallheadings,
+]
+{scrartcl}
+
+% _das_ Mathepaket schlechthin:
+\usepackage[
+  %% Nummerierung von Gleichungen links:
+  leqno,
+  %% Ausgabe von Gleichungen linksbündig:
+  fleqn,
+]{mathtools}
+% und dazu noch ein paar Mathesymbole und so:
+% (muss vor mathspec geladen werden)
+\usepackage{amsmath, amssymb}
+
+\usepackage[]{parskip}
+
+% Um auch schöne Schriftarten auswählen zu können:
+\usepackage[MnSymbol]{mathspec}
+% Wir wollen, dass alle unsere Schriften für TeX und einander angepasst sind:
+\defaultfontfeatures{Mapping=tex-text, Scale=MatchLowercase}
+% Die Hauptschriftart:
+\setmainfont[Numbers=OldStyle]{Minion Pro}
+% Die Matheschriftart:
+\setmathsfont(Digits,Latin,Greek)[
+  Numbers={Lining, Proportional}
+]{Minion Pro}
+% Die Schriftart für serifenlose Texte (z.B. Überschriften):
+\setallsansfonts[]{Minion Pro}
+% Und die Schriftart für nichtproportionale Texte:
+\setallmonofonts[]{Fira Mono}
+
+% Deutsche Sprache bei Silbentrennung und Datum:
+\usepackage[ngerman]{babel}
+
+% St. Mary Road, liefert Symbole für theoretische Informatik (z.B. \lightning):
+\usepackage{stmaryrd}
+
+% nutze die volle Seite als Satzspiegel:
+\usepackage[
+  % Randbreite sei 1cm (sonst ist sie 1in):
+  cm,
+  % Kopf- und Fußzeile werden miteinbezogen:
+  headings
+]{fullpage}
+% verbesserte Tabellen
+% bietet u.a. die Spaltenmöglichkeit 'm{width}' = zentrierte Spalte mit fester
+% Breite
+\usepackage{array}
+% kann komplexe Linien in Tabellen ziehen:
+%\usepackage{hhline}
+% mehrseitige Tabellen:
+%\usepackage{longtable}
+% Tabellen mit gedehnten Spalten:
+%\usepackage{tabularx}
+% Pimpt enumerate auf (optionales Argument liefert Nummerierung):
+\usepackage{enumerate}
+% Kann descriptions auf die selbe Höhe bringen:
+%\usepackage{enumitem}
+% Liefert Hyperlinks (\hyperref, \url, \href}
+\usepackage{hyperref}
+% Farben (wie bei TikZ):
+%\usepackage{xcolor}
+% Ändert den Zeilenabstand:
+\usepackage[
+  % nur eine Möglichkeit auswählen:
+  singlespacing
+  %onehalfspacing
+  %doublespacing
+]{setspace}
+% Schönere Tabellen
+% dazu gibt's neue Kommandos:
+% - \toprule[(Dicke)], \midrule[(Dicke)], \bottomrule[(Dicke)]
+% - \addlinespace: Extrahöhe zwischen Zeilen
+\usepackage{booktabs}
+% Schöne numerische Zitierungen:
+%\usepackage{cite}
+% Verbessert den Satz von Abbildungsüberschriften:
+%\usepackage{caption}
+% Ermöglicht durch \begin{linenumbers} Zeilennummern anzuzeigen:
+%\usepackage{lineno}
+% Ermöglicht Zugriff auf die letzte Seite (z.B. \pageref{LastPage}):
+\usepackage{lastpage}
+% Quelltext schön setzen:
+%\usepackage{listings}
+% Logische Beweise:
+%\usepackage{bussproofs}
+% Unterstreichungen (\uline, \uuline, \sout: durchgestrichen, \uwave):
+%\usepackage{ulem}
+% Kann alle möglichen Maße ändern
+% will man Querformat, dann:
+%\usepackage[landscape]{geometry}
+% bietet gestrichelte vert. Linien in Tabellen (':')
+%\usepackage{arydshln}
+% Quelltext schön setzen:
+% (verlangt "xelatex -shell-escape"!)
+%\usepackage{minted}
+% um Bilder einzubinden:
+%\usepackage{graphicx}
+% um in Tabellen eine Zelle über mehrere Zeilen laufen zu lassen:
+%\usepackage{multirow}
+
+% Coole Zeichnungen:
+%\usepackage{tikz}
+%\usetikzlibrary{
+  %backgrounds,
+  %mindmap,
+  %shapes.geometric,
+  %shapes.symbols,
+  %shapes.misc,
+  %shapes.multipart,
+  %positioning,
+  %fit,
+  %calc,
+  %arrows,
+  %automata,
+  %trees,
+  %decorations.pathreplacing,
+%}
+
+% eigens gebaute Lochmarken:
+%\usepackage{eso-pic}
+%\AddToShipoutPicture*{
+  %\put(\LenToUnit{0mm},\LenToUnit{228.5mm})
+    %{\rule{\LenToUnit{20pt}}{\LenToUnit{0.5pt}}}
+  %\put(\LenToUnit{0mm},\LenToUnit{68.5mm})
+    %{\rule{\LenToUnit{20pt}}{\LenToUnit{0.5pt}}}
+%}
+
+% coole Kopf- und Fußzeilen:
+\usepackage{fancyhdr}
+% Seitenstil ist natürlich fancy:
+\pagestyle{fancy}
+% alle Felder löschen:
+\fancyhf{}
+% Veranstaltung:
+\fancyhead[L]{Logik und Berechenbarkeit}
+% Seriennummer:
+\fancyhead[C]{Aufgabenblatt 1}
+% Name und Matrikelnummer:
+\fancyhead[R]{Martin Darmüntzel (7251955)}
+%\fancyfoot[L]{}
+%\fancyfoot[C]{\thepage}
+\fancyfoot[C]{\thepage\,/\,\pageref{LastPage}}
+% Linie oben/unten:
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+
+\begin{document}
+
+% Punktetabelle für Korrektoren:
+\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+    \textbf{1.} & \textbf{2.} & \textbf{3.} & $\Sigma$\\
+    \midrule
+    & & & \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Es seien $a,b,c$ ganze Zahlen. Überprüfen Sie, welche der folgenden
+    Aussagen richtig oder falsch sind. Falls die Aussage falsch ist, soll ein
+    Gegenbeispiel angegeben werden.
+    \begin{enumerate}[{1.}1.]
+    \item Ist $a$ ein Teiler von $b$ und $b$ ein Teiler von $a$, dann sind $a$
+      und $b$ gleich.
+
+      Hierbei kommt es auf die Definition der Teilbarkeit an.
+
+      Angenommen $a \mid b$ bedeutet, dass eine natürliche Zahl $k$ existiert,
+      mit der $a \cdot k = b$ gilt, dann ist die Aussage wahr.
+
+      Wenn $a \mid b$ jedoch bedeutet, dass eine ganze Zahl $k$ existiert, mit
+      der $a \cdot k = b$ gilt\footnote{siehe z.\,B.
+      \url{https://de.wikipedia.org/wiki/Teilbarkeit\#Formale\_Definition}},
+      dann gilt die Aussage nicht: $2 \mid -2$ und $-2 \mid 2$, aber $2 \neq
+      -2$.
+
+    \item Sind $a$ und $b$ Teiler von $c$, dann ist auch ihr Produkt $a \cdot b$
+      ein Teiler von $c$.
+
+      Wahr.
+
+    \item Ist $p$ eine Primzahl und ein Teiler von $a \cdot b$, dann ist $p$ ein
+      Teiler von $a$ oder $b$.
+
+      Wahr.
+
+    \item Sind $p_1, p_2, \dots, p_n$ die ersten $n$ Primzahlen (wobei $n \in
+      \mathbb{N} \setminus 0$), dann ist $p_1 \cdot p_2 \cdot \cdots \cdot p_n +
+      1$ ebenfalls eine Primzahl.
+
+      Wahr (Satz von Euklid).
+
+    \item Sind $a$ und $b$ ungerade Zahlen, dann ist ihre Summe gerade.
+
+      Wahr.
+
+    \item Sind $a$ und $b$ nicht durch $3$ teilbare Zahlen, dann ist ihre Summe
+      durch $3$ teilbar.
+
+      Falsch: $1 + 1 = 2$, aber $3 \nmid 2$.
+  \end{enumerate}
+
+  \item Es seien $A, B, C$ Mengen. Überprüfen Sie, welche der folgenden
+    Aussagen richtig oder falsch sind. Falls die Aussage falsch ist, soll ein
+    Gegenbeispiel angegeben werden.
+
+  \begin{enumerate}[{2.}1.]
+    \item Sind $A$ und $B$ Teilmengen von $C$, dann auch deren Vereinigung $A
+      \cup B$.
+
+      Wahr.
+
+    \item Ist $A \cup B = A \cup C$, dann ist $B = C$.
+
+      Falsch: seien $A = \{ 1,2,3 \}, B = \{ 2 \}, C = \{ 3 \}$, dann ist $\{ A
+        \cup B = \{ 1,2,3 \} = A \cup C$, aber $B \neq C$.
+
+    \item Ist $A \cap B = A \cap C$, dann ist $B = C$.
+
+      Falsch: seien $A = \{ 1 \}, B = \{ 1, 2 \}, C = \{ 1, 3 \}$, dann ist $\{ A
+        \cap B = \{ 1 \} = A \cap C$, aber $B \neq C$.
+
+    \item Wenn $A \setminus B = \emptyset$, dann ist $A \subseteq B$.
+
+      Wahr.
+
+    \item Wenn $A \subseteq B$, dann ist $A \setminus B = \emptyset$.
+
+      Wahr.
+
+    \item Ist $A \setminus C \subseteq B \setminus C$, dann ist $A \subseteq B$.
+
+      Falsch: seien $A = \{ 1,2,3 \}, B = \{ 1,3,4 \}, C = \{ 2,3,4 \}$, dann
+      ist $A \setminus C = \{ 1 \} \subseteq \{ 1 \} = B \setminus C$, aber $A
+      \nsubseteq B$.
+
+    \item Ist $A \subseteq B$, dann ist $A \setminus C \subseteq B \setminus C$.
+
+      Wahr.
+  \end{enumerate}
+
+  \item Zeigen Sie, dass für jedes $n \in \mathbb{N}: n^3-n$ durch $6$ teilbar
+    ist.
+
+    Beweisen wir zur Sicherheit folgendes Lemma: $a \mid b \wedge a \mid c
+    \Rightarrow a \mid b + c$.
+
+    $a \mid b$ bedeutet: es existiert ein $k_1 \in \mathbb{N}$ mit $b = a \cdot
+    k_1$.
+
+    $a \mid c$ bedeutet: es existiert ein $k_2 \in \mathbb{N}$ mit $c = a \cdot
+    k_2$.
+
+    Damit gilt
+    $b + c = a \cdot k_1 + a \cdot k_2 = a \cdot (k_1 + k_2)$
+    und daraus folgt $a \mid b + c$.
+
+    Zur eigentlichen Aufgabe: wir beweisen die Aussage mittels vollständiger
+    Induktion.
+
+    \begin{description}
+      \item[Induktionsanfang] Sei $n = 0$, dann ist $n^3 - n = 0^3 - 0 = 0$ und
+        da $6 \mid 0$ gilt, ist die Aussage wahr.
+
+      \item[Induktionsschritt] Zu beweisen ist folgende Behauptung: $6 \mid
+        n^3-n \Rightarrow 6 \mid {(n+1)}^3 - (n+1)$
+
+        Es gilt:
+        \begin{align*}
+          {(n+1)}^3 - (n+1) & = n^3 +3n^2 + 3n + 1 - n - 1\\
+                            & = n^3 - n + 3n^2 + 3n\\
+                            & = n^3 - n + 3n(n + 1)
+        \end{align*}
+
+        Da $n^3 - n$ bereits laut Induktionsvoraussetzung durch $6$ teilbar ist,
+        müssen wir nur noch zeigen, dass $3n(n+1)$ teilbar ist (da laut obigem
+        Lemma die Summe dann durch $6$ teilbar ist).
+
+        Dafür unterscheiden wir zwei Fälle:
+        \begin{description}
+          \item[Fall $2 \mid n$:] das bedeutet, dass eine natürliche Zahl $k$
+            existiert, so dass $n = 2 \cdot k$.
+
+            Daraus folgt
+            $3n(n+1) = 3 \cdot 2 \cdot k (2 \cdot k + 1) = 6 \cdot k (2 \cdot k + 1)$
+            und damit $6 \mid 3n(n+1)$.
+          \item[Fall $2 \nmid n$:] dann gilt $2 \mid n+1$. Das heißt, es
+            existiert ein $k \in \mathbb{N}$ mit $n+1 = 2 \cdot k$.
+
+            Daraus folgt $3n(n+1) = 3n \cdot 2k = 6kn$ und damit gilt
+            $6 \mid 3n(n+1)$.
+            \hfill $\Box$
+        \end{description}
+    \end{description}
+\end{enumerate}
+\end{document}

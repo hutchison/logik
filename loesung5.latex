@@ -1,0 +1,324 @@
+\documentclass[
+%% alle weiteren Papierformat einstellbar:
+a4paper, %apaper,
+%% keine Seitenzahlen:
+%empty,
+%% Schriftgröße (12pt, 11pt (Standard)):
+11pt,
+%% kleinere Überschriften:
+%smallheadings,
+]
+{scrartcl}
+
+% _das_ Mathepaket schlechthin:
+\usepackage[
+  %% Nummerierung von Gleichungen links:
+  leqno,
+  %% Ausgabe von Gleichungen linksbündig:
+  fleqn,
+]{mathtools}
+% und dazu noch ein paar Mathesymbole und so:
+% (muss vor mathspec geladen werden)
+\usepackage{amsmath, amssymb}
+
+\usepackage[]{parskip}
+
+% Um auch schöne Schriftarten auswählen zu können:
+\usepackage[MnSymbol]{mathspec}
+% Wir wollen, dass alle unsere Schriften für TeX und einander angepasst sind:
+\defaultfontfeatures{Mapping=tex-text, Scale=MatchLowercase}
+% Die Hauptschriftart:
+\setmainfont[Numbers=OldStyle]{Minion Pro}
+% Die Matheschriftart:
+\setmathsfont(Digits,Latin,Greek)[
+  Numbers={Lining, Proportional}
+]{Minion Pro}
+% Die Schriftart für serifenlose Texte (z.B. Überschriften):
+\setallsansfonts[]{Myriad Pro}
+% Und die Schriftart für nichtproportionale Texte:
+\setallmonofonts[]{Fira Mono}
+
+% Deutsche Sprache bei Silbentrennung und Datum:
+\usepackage[ngerman]{babel}
+
+% St. Mary Road, liefert Symbole für theoretische Informatik (z.B. \lightning):
+\usepackage{stmaryrd}
+
+% nutze die volle Seite als Satzspiegel:
+\usepackage[
+  % Randbreite sei 1cm (sonst ist sie 1in):
+  cm,
+  % Kopf- und Fußzeile werden miteinbezogen:
+  headings
+]{fullpage}
+% verbesserte Tabellen
+% bietet u.a. die Spaltenmöglichkeit 'm{width}' = zentrierte Spalte mit fester
+% Breite
+\usepackage{array}
+% kann komplexe Linien in Tabellen ziehen:
+%\usepackage{hhline}
+% mehrseitige Tabellen:
+%\usepackage{longtable}
+% Tabellen mit gedehnten Spalten:
+%\usepackage{tabularx}
+% Pimpt enumerate auf (optionales Argument liefert Nummerierung):
+\usepackage{enumerate}
+% Kann descriptions auf die selbe Höhe bringen:
+%\usepackage{enumitem}
+% Liefert Hyperlinks (\hyperref, \url, \href}
+\usepackage{hyperref}
+% Farben (wie bei TikZ):
+%\usepackage{xcolor}
+% Ändert den Zeilenabstand:
+\usepackage[
+  % nur eine Möglichkeit auswählen:
+  singlespacing
+  %onehalfspacing
+  %doublespacing
+]{setspace}
+% Schönere Tabellen
+% dazu gibt's neue Kommandos:
+% - \toprule[(Dicke)], \midrule[(Dicke)], \bottomrule[(Dicke)]
+% - \addlinespace: Extrahöhe zwischen Zeilen
+\usepackage{booktabs}
+% Schöne numerische Zitierungen:
+%\usepackage{cite}
+% Verbessert den Satz von Abbildungsüberschriften:
+%\usepackage{caption}
+% Ermöglicht durch \begin{linenumbers} Zeilennummern anzuzeigen:
+%\usepackage{lineno}
+% Ermöglicht Zugriff auf die letzte Seite (z.B. \pageref{LastPage}):
+\usepackage{lastpage}
+% Quelltext schön setzen:
+%\usepackage{listings}
+% Logische Beweise:
+%\usepackage{bussproofs}
+% Unterstreichungen (\uline, \uuline, \sout: durchgestrichen, \uwave):
+%\usepackage{ulem}
+% Kann alle möglichen Maße ändern
+% will man Querformat, dann:
+%\usepackage[landscape]{geometry}
+% bietet gestrichelte vert. Linien in Tabellen (':')
+%\usepackage{arydshln}
+% Quelltext schön setzen:
+% (verlangt "xelatex -shell-escape"!)
+%\usepackage{minted}
+% um Bilder einzubinden:
+%\usepackage{graphicx}
+% um in Tabellen eine Zelle über mehrere Zeilen laufen zu lassen:
+%\usepackage{multirow}
+
+% Coole Zeichnungen:
+%\usepackage{tikz}
+%\usetikzlibrary{
+  %backgrounds,
+  %mindmap,
+  %shapes.geometric,
+  %shapes.symbols,
+  %shapes.misc,
+  %shapes.multipart,
+  %positioning,
+  %fit,
+  %calc,
+  %arrows,
+  %automata,
+  %trees,
+  %decorations.pathreplacing,
+%}
+
+% eigens gebaute Lochmarken:
+%\usepackage{eso-pic}
+%\AddToShipoutPicture*{
+  %\put(\LenToUnit{0mm},\LenToUnit{228.5mm})
+    %{\rule{\LenToUnit{20pt}}{\LenToUnit{0.5pt}}}
+  %\put(\LenToUnit{0mm},\LenToUnit{68.5mm})
+    %{\rule{\LenToUnit{20pt}}{\LenToUnit{0.5pt}}}
+%}
+
+% coole Kopf- und Fußzeilen:
+\usepackage{fancyhdr}
+% Seitenstil ist natürlich fancy:
+\pagestyle{fancy}
+% alle Felder löschen:
+\fancyhf{}
+% Veranstaltung:
+\fancyhead[L]{Logik und Berechenbarkeit, Gruppe A}
+% Seriennummer:
+\fancyhead[C]{Aufgabenblatt 5}
+% Name und Matrikelnummer:
+\fancyhead[R]{Martin Darmüntzel (7251955)}
+%\fancyfoot[L]{}
+%\fancyfoot[C]{\thepage}
+\fancyfoot[C]{\thepage\,/\,\pageref{LastPage}}
+% Linie oben/unten:
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+
+\begin{document}
+
+% Punktetabelle für Korrektoren:
+\begin{center}
+  \begin{tabular}{cccc}
+    \toprule
+    \textbf{1.} & \textbf{2.} & \textbf{3.} & $\Sigma$\\
+    \midrule
+    & & & \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Richtig oder falsch?
+    \begin{enumerate}[{1.}1.]
+      \item Richtig.
+      \item Falsch.
+      \item Richtig.
+      \item Richtig.
+      \item Richtig.
+      \item Richtig.
+      \item Falsch.
+      \item Richtig.
+    \end{enumerate}
+  \item Überprüfen Sie durch Anwendung der Schnittregel, ob dieser Ausdruck
+    erfüllbar ist:
+    \begin{align*}
+      (\neg p_1 \vee p_3 \vee \neg p_4)
+      & \wedge (\neg p_1 \vee p_3 \vee p_4)
+      \wedge (\neg p_1 \vee \neg p_3 \vee \neg p_6)
+      \wedge (\neg p_1 \vee \neg p_3 \vee p_6)
+      \wedge (p_1 \vee \neg p_2 \vee \neg p_5)\\
+      & \wedge (p_1 \vee \neg p_2 \vee p_5)
+      \wedge (p_1 \vee p_2 \vee \neg p_6)
+      \wedge (p_1 \vee p_2 \vee p_6)
+      \wedge (p_2 \vee p_3 \vee p_4)\\
+      & \wedge (p_3 \vee p_5 \vee \neg p_6)
+      \wedge (\neg p_4 \vee p_5 \vee p_6)
+    \end{align*}
+  \item[$\bigstar$] Es ergibt sich folgende Klauselmenge:
+    \begin{align*}
+      \Big\{
+        \{\neg p_1 , p_3 , \neg p_4\}, &
+        \{\neg p_1 , p_3 , p_4\},
+        \{\neg p_1 , \neg p_3 , \neg p_6\},
+        \{\neg p_1 , \neg p_3 , p_6\},
+        \{p_1 , \neg p_2 , \neg p_5\},
+        \{p_1 , \neg p_2 , p_5\},
+        \{p_1 , p_2 , \neg p_6\},\\
+        \{p_1 , p_2 , p_6\}, &
+        \{p_2 , p_3 , p_4\},
+        \{p_3 , p_5 , \neg p_6\},
+        \{\neg p_4 , p_5 , p_6\}
+      \Big\}
+    \end{align*}
+    Mittels Schnittregel lassen sich folgende Klauselmengen ableiten:
+
+    \begin{center}
+      \begin{tabular}{llcl}
+        \toprule
+        \multicolumn{1}{c}{$K_1$}
+        & \multicolumn{1}{c}{$K_2$}
+        & elim. Variable
+        & \multicolumn{1}{c}{$K$}\\
+        \midrule
+        $\{\neg p_1 , p_3 , \neg p_4\}$
+        & $\{\neg p_1 , p_3 , p_4\}$
+        & $p_4$
+        & $\{\neg p_1 , p_3\}$\\
+        \midrule
+        $\{\neg p_1 , \neg p_3 , \neg p_6\}$
+        & $\{\neg p_1 , \neg p_3 , p_6\}$
+        & $p_6$
+        & $\{\neg p_1 , \neg p_3\}$\\
+        \midrule
+        $\{\neg p_1 , p_3\}$
+        & $\{\neg p_1 , \neg p_3\}$
+        & $p_3$
+        & $\{\neg p_1\}$\\
+        \midrule
+        $\{p_1 , \neg p_2 , \neg p_5\}$
+        & $\{p_1 , \neg p_2 , p_5\}$
+        & $p_5$
+        & $\{p_1 , \neg p_2\}$\\
+        \midrule
+        $\{\neg p_1\}$
+        & $\{p_1 , \neg p_2\}$
+        & $p_1$
+        & $\{\neg p_2\}$\\
+        \midrule
+        $\{p_1 , p_2 , \neg p_6\}$
+        & $\{p_1 , p_2 , p_6\}$
+        & $p_6$
+        & $\{p_1 , p_2\}$\\
+        \midrule
+        $\{\neg p_2\}$
+        & $\{p_1 , p_2\}$
+        & $p_2$
+        & $\{p_1\}$\\
+        \midrule
+        $\{\neg p_1\}$
+        & $\{p_1 \}$
+        & $p_1$
+        & $\emptyset$\\
+        \bottomrule
+      \end{tabular}
+    \end{center}
+    Damit ist der Ausdruck nicht erfüllbar.
+
+  \item[3.1.] Modellieren Sie die oben genannten Aussagen als eine Hornformel $F$.
+    Verwenden Sie den Markierungsalgorithmus, um die Erfüllbarkeit von $F$ zu
+    zeigen.
+  \item[$\bigstar$] Für einen beliebigen Ort $O$ sei $s(O)$ die Aussage, dass in
+    diesem Ort schneit, und $r(O)$ die Aussage, dass es diesem Ort regnet.
+
+    Wir schreiben $F$ gleich als Konjunktion von Implikationen:
+    \begin{align*}
+      F = &
+      \Big(\top \rightarrow s(A)\Big)
+      \wedge \Big(\top \rightarrow r(B)\Big)
+      \wedge \Big(s(A) \wedge r(B) \rightarrow s(C)\Big)
+      \wedge \Big(r(A) \wedge s(B) \rightarrow r(C)\Big)
+      \wedge \Big(s(A) \wedge s(B) \rightarrow r(D)\Big)\\
+      & \wedge \Big(r(A) \wedge r(B) \wedge s(C) \rightarrow s(D)\Big)
+      \wedge \Big(s(A) \wedge r(C) \wedge r(D) \rightarrow r(B)\Big)\\
+      & \wedge \Big(s(A) \wedge r(A) \rightarrow \bot\Big)
+      \wedge \Big(s(B) \wedge r(B) \rightarrow \bot\Big)
+      \wedge \Big(s(C) \wedge r(C) \rightarrow \bot\Big)
+      \wedge \Big(s(D) \wedge r(D) \rightarrow \bot\Big)
+    \end{align*}
+    Es ergeben sich folgende Markierungen:
+    \begin{align*}
+      F = &
+      \Big(\top \rightarrow \underline{s(A)}\Big)
+      \wedge \Big(\top \rightarrow \underline{r(B)}\Big)
+      \wedge \Big(\underline{s(A)} \wedge \underline{r(B)} \rightarrow s(C)\Big)
+      \wedge \Big(r(A) \wedge s(B) \rightarrow r(C)\Big)
+      \wedge \Big(\underline{s(A)} \wedge s(B) \rightarrow r(D)\Big)\\
+      & \wedge \Big(r(A) \wedge \underline{r(B)} \wedge s(C) \rightarrow s(D)\Big)
+      \wedge \Big(\underline{s(A)} \wedge r(C) \wedge r(D) \rightarrow \underline{r(B)}\Big)\\
+      & \wedge \Big(\underline{s(A)} \wedge r(A) \rightarrow \bot\Big)
+      \wedge \Big(s(B) \wedge \underline{r(B)} \rightarrow \bot\Big)
+      \wedge \Big(s(C) \wedge r(C) \rightarrow \bot\Big)
+      \wedge \Big(s(D) \wedge r(D) \rightarrow \bot\Big)\\
+      F = &
+      \Big(\top \rightarrow \underline{s(A)}\Big)
+      \wedge \Big(\top \rightarrow \underline{r(B)}\Big)
+      \wedge \Big(\underline{s(A)} \wedge \underline{r(B)} \rightarrow \underline{s(C)}\Big)
+      \wedge \Big(r(A) \wedge s(B) \rightarrow r(C)\Big)
+      \wedge \Big(\underline{s(A)} \wedge s(B) \rightarrow r(D)\Big)\\
+      & \wedge \Big(r(A) \wedge \underline{r(B)} \wedge \underline{s(C)} \rightarrow s(D)\Big)
+      \wedge \Big(\underline{s(A)} \wedge r(C) \wedge r(D) \rightarrow \underline{r(B)}\Big)\\
+      & \wedge \Big(\underline{s(A)} \wedge r(A) \rightarrow \bot\Big)
+      \wedge \Big(s(B) \wedge \underline{r(B)} \rightarrow \bot\Big)
+      \wedge \Big(\underline{s(C)} \wedge r(C) \rightarrow \bot\Big)
+      \wedge \Big(s(D) \wedge r(D) \rightarrow \bot\Big)
+    \end{align*}
+  Es folgen keine weiteren Markierungen und da keine Widersprüche aufgetreten
+  sind, folgt, dass $F$ erfüllbar ist.
+  \item[3.2.] Welche der folgenden Aussagen folgen daraus?
+    \begin{enumerate}[{3.2.}1.]
+      \item Falsch.
+      \item Wahr.
+      \item Wahr.
+    \end{enumerate}
+\end{enumerate}
+\end{document}
